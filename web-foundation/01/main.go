@@ -24,19 +24,26 @@ func sayHelloName(w http.ResponseWriter, r *http.Request) {
 
 func login(w http.ResponseWriter, r *http.Request) {
 	log.Println("mehod: ", r.Method) // get request method
+	w.Header().Set("Content-Type", "text/html")
 	if r.Method == "GET" {
 		t, err := template.ParseFiles("login.gtpl")
-		if err != nil {
-			log.Fatal(err)
-		}
+		checkError(w, err)
 		data := struct{ Title string }{Title: "Login"}
-		t.Execute(w, data)
+		err = t.Execute(w, data)
+		checkError(w, err)
 	} else {
 		r.ParseForm()
 		// login part of log in
 		log.Println("username: ", r.Form.Get("username"))
 		log.Println("password: ", r.Form.Get("password"))
 		fmt.Fprintf(w, "Hello "+r.Form.Get("username"))
+	}
+}
+
+func checkError(w http.ResponseWriter, err error) {
+	if err != nil {
+		log.Fatal(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
