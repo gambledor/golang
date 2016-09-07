@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>tpl</title>
+</head>
+<body>
+	<ul>
+		{{range $key, $val := .}}
+		<li>{{$key}} - {{$val}}</li>
+		{{end}}
+	</ul>
+</body>
+</html>
