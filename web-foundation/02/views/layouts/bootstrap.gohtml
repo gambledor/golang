@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{{define "bootstrap"}}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>globrutto.io</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" media="screen" title="bootstrap.css" charset="utf-8">
+</head>
+<body>
+	<div class="container-fluid">
+		<!-- our content goes here -->
+		{{template "yield" .}}
+	</div>
+
+	<!-- jquery & Bootstrap JS -->
+	<script type="text/javascript" charset="utf-8" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="//maxcdn.bootstrapcdn.com/boostrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
+{{end}}
