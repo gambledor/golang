@@ -114,7 +114,7 @@ func main() {
 	}
 
 	flag.Parse()
-	if len(flag.Args()) == 0 {
+	if flag.NArg() == 0 {
 		fmt.Println("file missing")
 		os.Exit(2)
 	}
