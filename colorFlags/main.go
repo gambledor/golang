@@ -1,4 +1,3 @@
-// https://www.youtube.com/watch?v=4D506W1AjeM&index=6
 package main
 
 import (
