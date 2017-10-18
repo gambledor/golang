@@ -2,27 +2,27 @@
 package timeutil
 
 import (
-    "time"
+	"time"
 )
+
 type MyDate struct {
-    Location        *time.Location
-    DateInLocation  time.Time
-    Timestamp       int64
+	Location       *time.Location
+	DateInLocation time.Time
+	Timestamp      int64
 }
 
-// ToTimestamp 
+// ToTimestamp
 func ToTimestamp(dateToConvert, dateForm, timezone string) (MyDate, error) {
-    location, err := time.LoadLocation(timezone)
-    if err != nil {
-        return MyDate{}, err
-    }
+	location, err := time.LoadLocation(timezone)
+	if err != nil {
+		return MyDate{}, err
+	}
 
-    var convertedDate time.Time
-    convertedDate, err = time.ParseInLocation(dateForm, dateToConvert, location)
-    if err != nil {
-        return MyDate{}, err
-    }
+	var convertedDate time.Time
+	convertedDate, err = time.ParseInLocation(dateForm, dateToConvert, location)
+	if err != nil {
+		return MyDate{}, err
+	}
 
-    return MyDate{location, convertedDate, convertedDate.Unix()}, nil
+	return MyDate{location, convertedDate, convertedDate.Unix()}, nil
 }
-
