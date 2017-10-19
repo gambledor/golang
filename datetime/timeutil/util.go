@@ -11,15 +11,15 @@ type MyDate struct {
 	Timestamp      int64
 }
 
-// ToTimestamp
-func ToTimestamp(dateToConvert, dateForm, timezone string) (MyDate, error) {
+// ToTimestamp converts a dateTime in a formatted dateForm in the timezone
+func ToTimestamp(dateTimeToConvert, dateForm, timezone string) (MyDate, error) {
 	location, err := time.LoadLocation(timezone)
 	if err != nil {
 		return MyDate{}, err
 	}
 
 	var convertedDate time.Time
-	convertedDate, err = time.ParseInLocation(dateForm, dateToConvert, location)
+	convertedDate, err = time.ParseInLocation(dateForm, dateTimeToConvert, location)
 	if err != nil {
 		return MyDate{}, err
 	}
