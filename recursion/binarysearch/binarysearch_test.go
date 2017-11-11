@@ -27,7 +27,7 @@ func TestBinarySearch(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		t.Logf("Testing binary search expecting %d", c.want)
+		t.Logf("Testing binary search expecting index %d", c.want)
 		got := FindStringInSortedSlice(c.key, c.slice)
 		if got != c.want {
 			t.Errorf("BinarySearch(%s) got %d, want %d", c.key, got, c.want)

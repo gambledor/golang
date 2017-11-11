@@ -1,4 +1,4 @@
-// Package binarysearch provides binary search algorith
+// Package binarysearch provides binary search algorithm
 package binarysearch
 
 import "strings"
