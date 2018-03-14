@@ -16,6 +16,19 @@ const (
 	CONF_FILE_NAME string = ".remote_connections"
 )
 
+// remoteConnector execute the ssh connection to the chosen remoteMachine
+func remoteConnector(remoteMachine file.RemoteMachine) {
+	var connectionString string = fmt.Sprintf("%s@%s", remoteMachine.User, remoteMachine.Host)
+	cmd := exec.Command("ssh", connectionString)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+}
+
 func main() {
 	// 1. read configuration file for remote connections
 	var remoteMachines []file.RemoteMachine
@@ -41,13 +54,5 @@ func main() {
 
 	// 4. make a ssh connction to the chosen machine
 	var remoteMachine file.RemoteMachine = remoteMachines[choise]
-	var connectionString string = fmt.Sprintf("%s@%s", remoteMachine.User, remoteMachine.Host)
-	cmd := exec.Command("ssh", connectionString)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	if err := cmd.Run(); err != nil {
-		log.Fatal(err)
-		os.Exit(1)
-	}
+	remoteConnector(remoteMachine)
 }
