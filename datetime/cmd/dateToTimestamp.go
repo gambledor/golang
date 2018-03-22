@@ -4,10 +4,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"golang/datetime/timeutil"
 	"log"
 	"os"
 	"time"
+
+	"github.com/gambledor/golang/datetime/timeutil"
 )
 
 func main() {
