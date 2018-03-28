@@ -40,8 +40,11 @@ func main() {
 	}
 	// 2. show a menu of remote connection
 	for idx, machine := range remoteMachines {
-		fmt.Printf("%d) %s\n", idx, machine.Name)
+		// add 1 as index offset
+		fmt.Printf("%d) %s\n", idx+1, machine.Name)
 	}
+	// press 0 to quit
+	fmt.Printf("%d) %s\n", 0, "quit")
 	fmt.Print("> ")
 
 	// 3. the user makes a choise to witch machine wants to connect to
@@ -50,9 +53,11 @@ func main() {
 		log.Fatal(err)
 		os.Exit(1)
 	}
-	fmt.Println("You've chosen to connect to", remoteMachines[choise].Host)
-
 	// 4. make a ssh connction to the chosen machine
-	var remoteMachine file.RemoteMachine = remoteMachines[choise]
-	remoteConnector(remoteMachine)
+	if choise != 0 {
+		fmt.Println("You've chosen to connect to", remoteMachines[choise].Host)
+		var remoteMachine file.RemoteMachine = remoteMachines[choise]
+		remoteConnector(remoteMachine)
+	}
+	fmt.Println("Bye Bye")
 }
