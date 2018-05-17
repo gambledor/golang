@@ -1,7 +1,9 @@
-// Package util provides utility functions for my own date time management
+// Package timeutil provides utility functions for my own date time management
 package timeutil
 
 import (
+	"errors"
+	"regexp"
 	"time"
 )
 
@@ -11,8 +13,12 @@ type myDate struct {
 	Timestamp      int64
 }
 
-// ToTimestamp converts a dateTime in a formatted dateForm in the timezone
+// ToTimestamp converts a dateTime string format dd/mm/YYYY HH:MM:ii in a formatted dateForm with timezone
 func ToTimestamp(dateTimeToConvert, dateForm, timezone string) (myDate, error) {
+	if !validateInputDateTimeFormat(dateTimeToConvert) {
+		return myDate{}, errors.New("Wrong date time input form")
+	}
+
 	location, err := time.LoadLocation(timezone)
 	if err != nil {
 		return myDate{}, err
@@ -29,6 +35,10 @@ func ToTimestamp(dateTimeToConvert, dateForm, timezone string) (myDate, error) {
 
 // NowInTimezone return the datetime in the timezone
 func NowInTimezone(dateForm, timezone string) (myDate, error) {
+	if !validateInputDateTimeFormat(dateTimeToConvert) {
+		return myDate{}, errors.New("Wrong date time input form")
+	}
+
 	location, err := time.LoadLocation(timezone)
 	if err != nil {
 		return myDate{}, err
@@ -38,3 +48,12 @@ func NowInTimezone(dateForm, timezone string) (myDate, error) {
 
 	return myDate{location, now, now.Unix()}, nil
 }
+
+func validateInputDateTimeFormat(dateTimeToConvert string) bool {
+	// format: dd\mm\YYYY HH:MM:ii
+	myRegexp := "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d"
+	r := regexp.MustCompile(myRegexp)
+
+	return r.MatchString(dateTimeToConvert)
+}
+
