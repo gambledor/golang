@@ -18,7 +18,7 @@ var (
 )
 
 func init() {
-	command = flag.String("cmd", "lu", "The command to execute.\n\tAd exapmle: lu (lookup), lucn (lookup CNAME), luport (lookup port)")
+	command = flag.String("cmd", "lu", "The command to execute.\n\tAd example: lu (lookup), lucn (lookup CNAME), luport (lookup port)")
 	hostname = flag.String("h", "", "The hostname")
 	netType = flag.String("nt", "", "The network type (tcp, udp)")
 	service = flag.String("s", "", "The netword service (telnet, imap, ect.)")

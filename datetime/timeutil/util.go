@@ -35,10 +35,6 @@ func ToTimestamp(dateTimeToConvert, dateForm, timezone string) (myDate, error) {
 
 // NowInTimezone return the datetime in the timezone
 func NowInTimezone(dateForm, timezone string) (myDate, error) {
-	if !validateInputDateTimeFormat(dateTimeToConvert) {
-		return myDate{}, errors.New("Wrong date time input form")
-	}
-
 	location, err := time.LoadLocation(timezone)
 	if err != nil {
 		return myDate{}, err
