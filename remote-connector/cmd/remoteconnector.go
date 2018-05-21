@@ -73,7 +73,7 @@ func main() {
 		choise = showRemoteMachines(remoteMachines)
 	}
 	// 4. make a ssh connction to the chosen machine
-	if choise != 0 && choise > 0 && choise < len(remoteMachines){
+	if choise > 0 && choise < len(remoteMachines) {
 		fmt.Println("You've chosen to connect to", remoteMachines[choise-1].Host)
 		remoteConnector(remoteMachines[choise-1])
 	}
