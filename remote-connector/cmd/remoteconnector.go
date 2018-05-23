@@ -10,6 +10,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strconv"
 
 	"github.com/gambledor/golang/remote-connector/file"
 )
@@ -21,10 +22,9 @@ const (
 
 var choise int
 
-func init()  {
+func init() {
 	flag.IntVar(&choise, "c", 0, "The chosen remote machine")
 }
-
 
 // remoteConnector execute the ssh connection to the chosen remoteMachine
 func remoteConnector(remoteMachine file.RemoteMachine) {
@@ -46,12 +46,22 @@ func showRemoteMachines(remoteMachines []file.RemoteMachine) int {
 	}
 	// press 0 to quit
 	fmt.Printf("%d) %s\n", 0, "quit")
-	fmt.Print("> ")
-	// 3. the user makes a choise to witch machine wants to connect to
 	var choise int
-	if _, err := fmt.Scanf("%d", &choise); err != nil {
-		log.Fatal(err)
-		os.Exit(1)
+	var exit bool // initialized to false
+	// 3. the user makes a choise to witch machine wants to connect to
+	for !exit {
+		fmt.Print("> ")
+		var err error
+		var input string
+		if _, err = fmt.Scanf("%s", &input); err != nil {
+			fmt.Println("No choise has been made")
+		}
+		if choise, err = strconv.Atoi(input); err != nil {
+			fmt.Println("You have to enter a number")
+		}
+		if err == nil && choise >= 0 && choise < len(remoteMachines) {
+			exit = true
+		}
 	}
 
 	return choise
