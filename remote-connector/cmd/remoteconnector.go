@@ -39,13 +39,16 @@ func remoteConnector(remoteMachine file.RemoteMachine) {
 	}
 }
 
-func showRemoteMachines(remoteMachines []file.RemoteMachine) int {
+func showRemoteMachines(remoteMachines []file.RemoteMachine) {
 	for idx, machine := range remoteMachines {
 		// add 1 as index offset
 		fmt.Printf("%d) %s\n", idx+1, machine.Name)
 	}
 	// press 0 to quit
 	fmt.Printf("%d) %s\n", 0, "quit")
+}
+
+func getChoice(remoteMachines []file.RemoteMachine) int {
 	var choise int
 	var exit bool // initialized to false
 	// 3. the user makes a choise to witch machine wants to connect to
@@ -59,7 +62,7 @@ func showRemoteMachines(remoteMachines []file.RemoteMachine) int {
 		if choise, err = strconv.Atoi(input); err != nil {
 			fmt.Println("You have to enter a number")
 		}
-		if err == nil && choise >= 0 && choise < len(remoteMachines) {
+		if err == nil && choise >= 0 && choise <= len(remoteMachines) {
 			exit = true
 		}
 	}
@@ -68,7 +71,6 @@ func showRemoteMachines(remoteMachines []file.RemoteMachine) int {
 }
 
 func main() {
-	flag.Parse()
 
 	// 1. read configuration file for remote connections
 	var remoteMachines []file.RemoteMachine
@@ -78,12 +80,18 @@ func main() {
 		log.Fatal(err)
 		os.Exit(1)
 	}
+	if len(os.Args) > 1 && os.Args[1] == "list" {
+		showRemoteMachines(remoteMachines)
+		os.Exit(0)
+	}
+	flag.Parse()
 	// 2. show a remote connections menu and get choise
 	if choise == 0 {
-		choise = showRemoteMachines(remoteMachines)
+		showRemoteMachines(remoteMachines)
+		choise = getChoice(remoteMachines)
 	}
 	// 4. make a ssh connction to the chosen machine
-	if choise > 0 && choise < len(remoteMachines) {
+	if choise > 0 && choise <= len(remoteMachines) {
 		fmt.Println("You've chosen to connect to", remoteMachines[choise-1].Host)
 		remoteConnector(remoteMachines[choise-1])
 	}
