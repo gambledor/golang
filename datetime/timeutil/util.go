@@ -4,6 +4,7 @@ package timeutil
 import (
 	"errors"
 	"regexp"
+	"strconv"
 	"time"
 )
 
@@ -45,11 +46,37 @@ func NowInTimezone(dateForm, timezone string) (myDate, error) {
 	return myDate{location, now, now.Unix()}, nil
 }
 
-func validateInputDateTimeFormat(dateTimeToConvert string) bool {
-	// format: dd\mm\YYYY HH:MM:ii
-	myRegexp := "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d"
-	r := regexp.MustCompile(myRegexp)
+// TimestampToDateTime converts a timestamp to a date time in the timezone
+func TimestampToDateTime(timestampstr, dateForm, timezone string) (myDate, error) {
+	if !validateInputTimestamp(timestampstr) {
+		return myDate{}, errors.New("Wrong timestamp input")
+	}
 
-	return r.MatchString(dateTimeToConvert)
+	location, err := time.LoadLocation(timezone)
+	if err != nil {
+		return myDate{}, err
+	}
+	timestamp, err := strconv.ParseInt(timestampstr, 10, 64)
+	if err != nil {
+		return myDate{}, err
+	}
+
+	time := time.Unix(timestamp, 0).In(location)
+
+	return myDate{location, time, timestamp}, nil
 }
 
+func validateInputDateTimeFormat(dateTimeToConvert string) bool {
+	// format: dd\mm\YYYY HH:MM:ii
+	dateTimeRegex := "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d"
+	r1 := regexp.MustCompile(dateTimeRegex)
+
+	return r1.MatchString(dateTimeToConvert)
+}
+
+func validateInputTimestamp(timestamp string) bool {
+	timestampRegex := `^1\d{9}`
+	r2 := regexp.MustCompile(timestampRegex)
+
+	return r2.MatchString(timestamp)
+}
