@@ -20,3 +20,19 @@ func TestValidateInputDateTimeFormatWithError(t *testing.T) {
 		t.Errorf("got '%t', want '%t'", got, want)
 	}
 }
+
+func TestValidateInputTimestampWithSuccess(t *testing.T) {
+	got := validateInputTimestamp("1527876016")
+	want := true
+	if got != want {
+		t.Errorf("got '%t', want '%t'", got, want)
+	}
+}
+
+func TestValidateInputTimestampWithError(t *testing.T) {
+	got := validateInputTimestamp("152787601")
+	want := false
+	if got != want {
+		t.Errorf("got '%t', want '%t'", got, want)
+	}
+}
