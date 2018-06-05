@@ -45,4 +45,5 @@ func main() {
 		}
 		fmt.Println("location:", date.Location, "date-time:", date.DateInLocation, "timestamp:", date.Timestamp)
 	}
+
 }
