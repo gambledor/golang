@@ -46,7 +46,7 @@ func flagColor(name string, value color.Color, usage string) color.Color {
 }
 
 func main() {
-	fg := flagColor("fg", color.White, "foreground color")
+	fg := flagColor("fg", color.Black, "foreground color")
 	bg := flagColor("bg", color.White, "background color")
 	flag.Parse()
 
