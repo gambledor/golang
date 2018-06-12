@@ -18,6 +18,10 @@ import (
 const (
 	// ConfFileName is the configuration file name
 	ConfFileName string = ".remote_connections"
+	// The software version
+	version string = "0.4"
+	// The software author
+	author = "Giuseppe Lo Brutto"
 )
 
 var choise int
@@ -29,7 +33,7 @@ func init() {
 // remoteConnector execute the ssh connection to the chosen remoteMachine
 func remoteConnector(remoteMachine file.RemoteMachine) {
 	connectionString := fmt.Sprintf("%s@%s", remoteMachine.User, remoteMachine.Host)
-	cmd := exec.Command("ssh", connectionString)
+	cmd := exec.Command(remoteMachine.Protocol, connectionString)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -71,6 +75,11 @@ func getChoice(remoteMachines []file.RemoteMachine) int {
 }
 
 func main() {
+
+	if len(os.Args) > 1 && os.Args[1] == "version" {
+		fmt.Printf("remote connector \033[32m%s\033[0m, created by \033[96m%s\n", version, author)
+		os.Exit(0)
+	}
 
 	// 1. read configuration file for remote connections
 	var remoteMachines []file.RemoteMachine

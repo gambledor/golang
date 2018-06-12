@@ -8,6 +8,7 @@ The file content is an array of json object which syntax is, here below:
         "user": "<ssh-username>",
         "name": "<my remote hostname alias>",
         "host": "<remote hostname/ip>"
+        "protocol": "<ssh>"
     }
 ]
 ```
