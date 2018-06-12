@@ -10,9 +10,10 @@ import (
 
 // RemoteMachine is a remote machine config
 type RemoteMachine struct {
-	User string `json:user`
-	Name string `json:name`
-	Host string `json:host`
+	User     string `json:user`
+	Name     string `json:name`
+	Host     string `json:host`
+	Protocol string `json:protocol`
 }
 
 // ReadConfigFile reads the remote machine file config
